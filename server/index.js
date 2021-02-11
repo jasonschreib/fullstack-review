@@ -13,6 +13,9 @@ app.post('/repos', function (req, res) {
   // save the repo information in the database
   console.log('REQBODY', req.body);
   //call getReposByUsername() -> will fetch a user's repositories from the GitHub API
+  //we get this response back
+  //then with this response want to handle duplicates and update the repo that matches the user and repoName, or create brand new entry in database
+  //send response data back to the server
 
 });
 
