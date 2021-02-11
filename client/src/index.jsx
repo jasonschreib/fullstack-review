@@ -16,7 +16,9 @@ class App extends React.Component {
   search (term) {
     console.log(`${term} was searched`);
     // TODO
-    //pass this term to the POST request
+    //initiate an ajax post request with the term as data
+    //^^use the ajax post method to directly send a post
+    $.post('/repos', {'searchTerm': term}, function (data) {console.log('This was a successful post')});
   }
 
   render () {
