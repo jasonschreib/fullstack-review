@@ -18,7 +18,8 @@ class App extends React.Component {
     // TODO
     //initiate an ajax post request with the term as data
     //^^use the ajax post method to directly send a post
-    $.post('/repos', {'searchTerm': term}, function (data) {console.log('This was a successful post')});
+    $.post('/repos', {'searchTerm': term},
+    function (data) {console.log('This was a successful post')});
   }
 
   render () {

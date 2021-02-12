@@ -1,4 +1,4 @@
-var github = require('../helpers/github.js');
+const github = require('../helpers/github.js');
 
 const express = require('express');
 let app = express();
@@ -16,9 +16,6 @@ app.post('/repos', function (req, res) {
   console.log('REQBODY', req.body);
   //call getReposByUsername() -> will fetch a user's repositories from the GitHub API
   github.getReposByUsername(req.body.searchTerm);
-  //we get this response back
-  //then with this response want to handle duplicates and update the repo that matches the user and repoName, or create brand new entry in database
-  //send response data back to the server
 
 });
 

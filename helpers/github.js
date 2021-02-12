@@ -1,6 +1,8 @@
 const axios = require('axios');
 const config = require('../config.js');
 
+const mongoose = require('../database');
+
 let getReposByUsername = (username) => {
   // TODO - Use the axios module to request repos for a specific
   // user from the github API
@@ -15,10 +17,14 @@ let getReposByUsername = (username) => {
   };
   //make a get request using the axios module
   axios.get('https://api.github.com/users/' + username +'/repos', options)
-  //this returns a promise so console.log it after to see what it returns
+  //^^this returns a promise
+  //then with this response want to handle duplicates and update the repo that matches the user and repoName, or create brand new entry in database
   .then((response) => {
-    console.log('WHATUP', response);
+    console.log('WHATUP', response.data);
+    //call save() from database - save relevant data from GitHub API into database
+    mongoose.save(response.data);
   });
+
 }
 
 module.exports.getReposByUsername = getReposByUsername;

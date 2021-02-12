@@ -20,10 +20,16 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (/* TODO */) => {
+let save = (fetchData) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
+  console.log('Im in Mongo save function');
+
+
+
+
+  //send response data back to the server
 }
 
 module.exports.save = save;
