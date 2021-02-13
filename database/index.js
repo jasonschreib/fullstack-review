@@ -6,8 +6,7 @@ let repoSchema = mongoose.Schema({
   // TODO: your schema here!
   nameOfUser: {
       type: String,
-  required: true,
-  unique: false
+      unique: false
   },
   repoId: {type: Number, unique: true},
   repoName: {type: String},
@@ -24,51 +23,57 @@ let save = (fetchData) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
-  console.log('Im in Mongo save function', fetchData);
+  console.log('Im in Mongo save function');
   //iterate over the fetchData array
-  for (var i = 0; i < fetchData.length; i++) {
-    //create a new document from the model for each index in fetchData array
-    const doc = new Repo(
-      {
-        nameOfUser: fetchData[i].owner.login,
-       repoId: fetchData[i].id,
-       repoName: fetchData[i].name,
-       repoUrl: fetchData[i].html_url,
-       forks_count: fetchData[i].forks_count,
-       watchers_count: fetchData[i].watchers_count
-      }
-    );
-    doc.save((err, results) => {
+  for (let i = 0; i < fetchData.length; i++) {
+    //establish a query for the find operation
+    var query = Repo.find({nameOfUser: fetchData[i].owner.login,
+                         repoId: fetchData[i].id}).lean().limit(1);
+    //execute the query
+    query.exec(function(err, result) {
+      //error check
       if (err) {
         console.log(err);
       }
-      console.log(results);
-    })
-    //if an entry with the repo and username can be found
-      //update that entry with new info
-    //otherwise create a brand new entry
-
-
-    }
-
-
-  //send response data back to the server
+      //if no document is found
+      if (result === null) {
+        //create brand new document from the model
+        const doc = new Repo(
+          { nameOfUser: fetchData[i].owner.login,
+            repoName: fetchData[i].name,
+            repoUrl: fetchData[i].html_url,
+            repoId: fetchData[i].id,
+           forks_count: fetchData[i].forks_count,
+           watchers_count: fetchData[i].watchers_count }
+        );
+        //save the document
+        doc.save((err, results) => {
+          if (err) {
+            console.log(err);
+          }
+          console.log('success');
+        });
+        //if the document is found, then update that document
+      } else {
+        console.log('HERE', fetchData[0]);
+          Repo.update({nameOfUser: fetchData[i].owner.login,
+            repoId: fetchData[i].id},
+            {forks_count: fetchData[i].forks_count, watchers_count: fetchData[i].watchers_count},
+            {},
+            function(err, results) {
+              ///error check
+              if (err) {
+                console.log(err);
+              }
+              console.log('SUCESS');
+            });
+      }
+    });
+  }
 }
+
+
 
 module.exports.save = save;
 
 
-    // Repo.findOne({ nameOfUser: fetchData[i].owner.login, repoId: fetchData[i].id })
-    //   .then((exists) => {
-    //     if (exists) {
-    //       console.log('FOUND AN ENTRY', i)
-    //       //otherwise entry not found
-    //       //call FindOneAndUpdate function to update this entry
-    //     } else {
-    //       console.log('DIDNT FIND ENTRY', i)
-    //       //add a new entry to database
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
