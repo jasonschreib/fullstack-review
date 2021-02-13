@@ -16,7 +16,8 @@ app.post('/repos', function (req, res) {
   console.log('REQBODY', req.body);
   //call getReposByUsername() -> will fetch a user's repositories from the GitHub API
   github.getReposByUsername(req.body.searchTerm);
-
+  //send a response back to client
+  res.end();
 });
 
 app.get('/repos', function (req, res) {

@@ -35,8 +35,9 @@ let save = (fetchData) => {
       if (err) {
         console.log(err);
       }
+      // console.log('RESULT', result);
       //if no document is found
-      if (result === null) {
+      if (result.length === 0) {
         //create brand new document from the model
         const doc = new Repo(
           { nameOfUser: fetchData[i].owner.login,
@@ -55,7 +56,7 @@ let save = (fetchData) => {
         });
         //if the document is found, then update that document
       } else {
-        console.log('HERE', fetchData[0]);
+        console.log('HERE', fetchData[i]);
           Repo.update({nameOfUser: fetchData[i].owner.login,
             repoId: fetchData[i].id},
             {forks_count: fetchData[i].forks_count, watchers_count: fetchData[i].watchers_count},
@@ -71,7 +72,6 @@ let save = (fetchData) => {
     });
   }
 }
-
 
 
 module.exports.save = save;
