@@ -12,7 +12,8 @@ let repoSchema = mongoose.Schema({
   repoName: {type: String},
   repoUrl: {type: String, unique: true},
   forks_count: {type: Number},
-  watchers_count: {type: Number}
+  watchers_count: {type: Number},
+  composite_score: {type: Number}
 });
 
 
@@ -45,7 +46,8 @@ let save = (fetchData) => {
             repoUrl: fetchData[i].html_url,
             repoId: fetchData[i].id,
            forks_count: fetchData[i].forks_count,
-           watchers_count: fetchData[i].watchers_count }
+           watchers_count: fetchData[i].watchers_count,
+          composite_score: 3 * fetchData[i].forks_count + fetchData[i].watchers_count}
         );
         //save the document
         doc.save((err, results) => {
@@ -59,14 +61,14 @@ let save = (fetchData) => {
         console.log('HERE', fetchData[i]);
           Repo.update({nameOfUser: fetchData[i].owner.login,
             repoId: fetchData[i].id},
-            {forks_count: fetchData[i].forks_count, watchers_count: fetchData[i].watchers_count},
+            {forks_count: fetchData[i].forks_count, watchers_count: fetchData[i].watchers_count, composite_score: 3 * fetchData[i].forks_count + fetchData[i].watchers_count},
             {},
             function(err, results) {
               ///error check
               if (err) {
                 console.log(err);
               }
-              console.log('SUCESS');
+              console.log('SUCCESS');
             });
       }
     });
@@ -75,5 +77,3 @@ let save = (fetchData) => {
 
 
 module.exports.save = save;
-
-

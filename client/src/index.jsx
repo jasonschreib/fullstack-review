@@ -13,6 +13,14 @@ class App extends React.Component {
 
   }
 
+//render the top 25 repos as soon as the page loads
+componentDidMount() {
+  //send a get request to //repos
+
+  //update the state with the response sent back
+}
+
+
   search (term) {
     console.log(`${term} was searched`);
     // TODO
