@@ -56,7 +56,7 @@ componentDidMount() {
             <ul>
               <li>User: {repo.nameOfUser}</li>
               <li>Repo ID: {repo.repoId}</li>
-              <li>URL: {repo.repoUrl}</li>
+              <li>URL: <a href={repo.repoUrl}>{repo.repoUrl}</a></li>
               <li>Forks: {repo.forks_count}</li>
               <li>Watchers: {repo.watchers_count}</li>
               <li>Composite Score: {repo.composite_score}</li>
