@@ -22,6 +22,8 @@ class App extends React.Component {
 //     this.setState({repos: results});
 //   });
 // }
+
+//render the top 25 repos as soon as the page loads
 componentDidMount() {
   fetch('/repos')
     .then((res) => {
@@ -47,6 +49,22 @@ componentDidMount() {
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <ul>
+        {this.state.repos.map((repo) =>
+        (
+          <li key={repo.repoId}>Repo name: {repo.repoName}
+            <ul>
+              <li>User: {repo.nameOfUser}</li>
+              <li>Repo ID: {repo.repoId}</li>
+              <li>URL: {repo.repoUrl}</li>
+              <li>Forks: {repo.forks_count}</li>
+              <li>Watchers: {repo.watchers_count}</li>
+              <li>Composite Score: {repo.composite_score}</li>
+            </ul>
+          </li>
+        )
+        )}
+      </ul>
     </div>)
   }
 }
