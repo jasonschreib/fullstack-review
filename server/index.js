@@ -26,7 +26,7 @@ app.get('/repos', function (req, res) {
   // This route should send back the top 25 repos
   console.log('Reached first server step');
   //call github helper function which will access the database
-  var repos = github.getTopRepos(req, res);
+  github.getTopRepos(req, res);
     // //send this data back to the client
     // console.log('REPOS', repos);
     // res.send(repos);

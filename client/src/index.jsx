@@ -14,13 +14,22 @@ class App extends React.Component {
   }
 
 //render the top 25 repos as soon as the page loads
+// componentDidMount() {
+//   //send an ajax get request to //repos
+//   $.get('/repos', (error, results) => {
+//     console.log('RESULTS', results);
+//     //update the state with the response sent back
+//     this.setState({repos: results});
+//   });
+// }
 componentDidMount() {
-  //send an ajax get request to //repos
-  $.get('/repos', (error, results) => {
-    console.log('RESULTS', typeof results);
-    //update the state with the response sent back
-    this.setState({repos: results});
-  });
+  fetch('/repos')
+    .then((res) => {
+      return res.json()
+    }).then((results) => {
+      console.log(results);
+      this.setState({repos: results});
+    })
 }
 
 

@@ -28,7 +28,7 @@ let getReposByUsername = (username) => {
 //helper function to call function from database
 let getTopRepos = (req, res) => {
   console.log('reached second server step');
-  var sendBack = mongoose.returnTop(req, res);
+  mongoose.returnTop(req, res);
 }
 
 module.exports.getReposByUsername = getReposByUsername;
