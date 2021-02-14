@@ -75,5 +75,40 @@ let save = (fetchData) => {
   }
 }
 
+let returnTop = (req, res) => {
+  console.log('Reached db');
+  var topRepos = [];
+  //access the database and sort based on the composite_score
+  Repo.find({}).sort({ composite_score : -1 })
+  .then((results) => {
+    console.log('In the then');
+    //log what gets returned
+    for (let i = 0; i < results.length; i++) {
+      console.log(results[i]._doc);
+    }
+    //if the amount of repos in database is less than or equal to 25
+    if (results.length <= 25) {
+      //return them all in their sorted order
+      for (let i = 0; i < results.length; i++) {
+        topRepos.push(results[i]._doc);
+      }
+    } else {
+      //otherwise return the first 25 repos by iterating and pushing to array
+      for (let i = 0; i < 25; i++) {
+        topRepos.push(results[i]._doc);
+      }
+    }
+    console.log('reached end of db');
+    return topRepos;
+  })
+  .then((topRepos) => {
+    //return the topRepos array
+    console.log('TOP', topRepos);
+    res.send(topRepos);
+  });
+}
+
 
 module.exports.save = save;
+
+module.exports.returnTop = returnTop;

@@ -24,27 +24,12 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  var topRepos = [];
-  //access the database and sort based on the composite_score
-  Repo.find({}).sort({ composite_score : -1 }).exec(function(err, results){
-    //error check
-    if (err) {
-      console.log(err)
-    }
-    //log what gets returned
-    console.log(results);
-    //if the amount of repos in database is less than or equal to 25
-    if (results.length <= 25) {
-      //return them all in their sorted order
-      topRepos = results;
-    }
-    ///otherwise return the first 25 repos by iterating and pushing to array
-    for (var i = 0; i < 25; i++) {
-      topRepos.push(results[i]);
-    }
-    //send this data back to the client
-    res.send(topRepos)
-   });
+  console.log('Reached first server step');
+  //call github helper function which will access the database
+  var repos = github.getTopRepos(req, res);
+    // //send this data back to the client
+    // console.log('REPOS', repos);
+    // res.send(repos);
 });
 
 let port = 1128;

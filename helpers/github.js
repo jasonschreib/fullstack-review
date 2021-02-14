@@ -23,7 +23,14 @@ let getReposByUsername = (username) => {
     //call save() from database - save relevant data from GitHub API into database
     mongoose.save(response.data);
   });
+}
 
+//helper function to call function from database
+let getTopRepos = (req, res) => {
+  console.log('reached second server step');
+  var sendBack = mongoose.returnTop(req, res);
 }
 
 module.exports.getReposByUsername = getReposByUsername;
+
+module.exports.getTopRepos = getTopRepos;

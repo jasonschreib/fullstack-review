@@ -15,9 +15,12 @@ class App extends React.Component {
 
 //render the top 25 repos as soon as the page loads
 componentDidMount() {
-  //send a get request to //repos
-
-  //update the state with the response sent back
+  //send an ajax get request to //repos
+  $.get('/repos', (error, results) => {
+    console.log('RESULTS', typeof results);
+    //update the state with the response sent back
+    this.setState({repos: results});
+  });
 }
 
 
